@@ -34,7 +34,7 @@ function recordPosition(position) {
 function displayLocations() {
     let output = '<strong>Recorded Locations:</strong><br>';
     locations.forEach((location, index) => {
-        output += `${index + 1}. Latitude: ${location.latitude}, Longitude: ${location.longitude}, Time: ${location.timestamp}<br>`;
+        output += `${index + 1}. ${location.latitude}, ${location.longitude}, Time: ${location.timestamp}<br>`;
     });
     document.getElementById('output').innerHTML = output;
 
