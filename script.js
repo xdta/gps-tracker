@@ -60,7 +60,7 @@ function downloadLocations() {
 
     let textContent = 'Recorded GPS Locations:\n\n';
     locations.forEach((location, index) => {
-        textContent += `${index + 1}. Latitude: ${location.latitude}, Longitude: ${location.longitude}, Time: ${location.timestamp}\n`;
+        textContent += `${index + 1}. ${location.latitude}, ${location.longitude}, Time: ${location.timestamp}\n`;
     });
 
     // Create a blob and trigger a download
