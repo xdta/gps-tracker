@@ -1,12 +1,11 @@
 let locations = [];
 
-// Listen for the button click to record location
-document.getElementById('recordBtn').addEventListener('click', () => {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(recordPosition, showError);
-    } else {
-        document.getElementById('output').innerHTML = "Geolocation is not supported by this browser.";
-    }
+// Listen for the button click to record left or right location
+document.getElementById('recordLeftBtn').addEventListener('click', () => {
+    recordPosition('Left');
+});
+document.getElementById('recordRightBtn').addEventListener('click', () => {
+    recordPosition('Right');
 });
 
 // Listen for the button click to clear locations (and download before clearing)
@@ -19,22 +18,28 @@ document.getElementById('clearBtn').addEventListener('click', () => {
     }
 });
 
-function recordPosition(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    const timestamp = new Date().toLocaleString(); // Get the current date and time
+function recordPosition(side) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const timestamp = new Date().toLocaleString(); // Get the current date and time
 
-    // Save the new coordinates and timestamp to the locations array
-    locations.push({ latitude, longitude, timestamp });
+            // Save the new coordinates and timestamp to the locations array with the side label
+            locations.push({ side, latitude, longitude, timestamp });
 
-    // Display the updated list of coordinates with timestamps
-    displayLocations();
+            // Display the updated list of coordinates with timestamps
+            displayLocations();
+        }, showError);
+    } else {
+        document.getElementById('output').innerHTML = "Geolocation is not supported by this browser.";
+    }
 }
 
 function displayLocations() {
     let output = '<strong>Recorded Locations:</strong><br>';
     locations.forEach((location, index) => {
-        output += `${index + 1}. ${location.latitude}, ${location.longitude}, Time: ${location.timestamp}<br>`;
+        output += `${index + 1}. ${location.side}: Latitude: ${location.latitude}, Longitude: ${location.longitude}, Time: ${location.timestamp}<br>`;
     });
     document.getElementById('output').innerHTML = output;
 
@@ -60,7 +65,7 @@ function downloadLocations() {
 
     let textContent = 'Recorded GPS Locations:\n\n';
     locations.forEach((location, index) => {
-        textContent += `${index + 1}. ${location.latitude}, ${location.longitude}, Time: ${location.timestamp}\n`;
+        textContent += `${index + 1}. ${location.side}: Latitude: ${location.latitude}, Longitude: ${location.longitude}, Time: ${location.timestamp}\n`;
     });
 
     // Create a blob and trigger a download
