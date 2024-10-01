@@ -5,15 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Record GPS Coordinates</title>
     <style>
-        #recordBtn {
-            width: 100%;      /* Full width */
-            height: 33vh;     /* 1/3 of the viewport height */
-            font-size: 2em;   /* Larger text */
-            background-color: #4CAF50; /* Green background */
-            color: white;     /* White text */
-            border: none;     /* No borders */
-            cursor: pointer;  /* Pointer on hover */
-            margin: 10px 0;   /* Space between buttons */
+        /* Style for the buttons with images */
+        #recordLeftBtn, #recordRightBtn {
+            width: 40vw;        /* 45% of the viewport width for each button */
+            height: 40vw;       /* Maintain a square aspect ratio */
+            font-size: 2em;      /* Text size (not used in this case) */
+            background-color: transparent;  /* Transparent background */
+            background-size: contain;         /* Cover the entire button */
+            background-repeat: no-repeat;
+            border: none;       /* No borders */
+            cursor: pointer;    /* Pointer on hover */
+            margin: 10px 2.5vw; /* Space between buttons */
+            transition: transform 0.1s ease, box-shadow 0.1s ease; /* Smooth transition for click feedback */
+        }
+
+        /* Assign the images to the buttons */
+        #recordLeftBtn {
+            background-image: url('incense-left.png');
+        }
+
+        #recordRightBtn {
+            background-image: url('incense-right.png');
+        }
+
+        /* Add click feedback for the buttons */
+        #recordLeftBtn:active, #recordRightBtn:active {
+            transform: scale(0.95);  /* Slightly shrink the button when clicked */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Add shadow effect */
         }
 
         #clearBtn {
@@ -32,12 +50,31 @@
         p {
             font-size: 1.2em; /* Increase the font size of the text */
         }
+
+        /* Ensure the buttons align properly on smaller screens */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;       /* Ensure the buttons span across the page */
+        }
     </style>
 </head>
 <body>
     <h1>Record Your GPS Coordinates</h1>
-    <button id="recordBtn">Record Location</button>
-    <p id="output">Click the button to record your GPS location.</p>
+    
+    <div class="button-container">
+        <button id="recordLeftBtn"></button>
+        <button id="recordRightBtn"></button>
+    </div>
+    
+    <p id="output">Click a button to record your GPS location.</p>
 
     <button id="clearBtn">Clear Locations</button>
 
